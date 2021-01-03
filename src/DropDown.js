@@ -1,21 +1,43 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-const DropDown = () => {
-	return (
-		<div className="book-shelf-changer">
-			<select>
-				<option value="move" disabled>
-					Move to...
-				</option>
-				<option value="currentlyReading">Currently Reading</option>
-				<option value="wantToRead" selected>
-					Want to Read
-				</option>
-				<option value="read">Read</option>
-				<option value="none">None</option>
-			</select>
-		</div>
-	);
+class DropDown extends Component {
+	constructor(props) {
+		super(props);
+		this.onChange = this.onChange.bind(this);
+	}
+
+	onChange = (event) => {
+		this.props.onSelected(event.target.value);
+	};
+
+	render() {
+		const { categories } = this.props;
+		const options = categories.map((category) => (
+			<option
+				value={category}
+				selected={this.props.defaultSelection === category}
+			>
+				{category}
+			</option>
+		));
+		return (
+			<div className="book-shelf-changer">
+				<select onChange={this.onChange}>
+					<option value="move" disabled>
+						Move to...
+					</option>
+					{options}
+				</select>
+			</div>
+		);
+	}
+}
+
+DropDown.propTypes = {
+	defaultSelection: PropTypes.string.isRequired,
+	categories: PropTypes.array.isRequired,
+	onSelected: PropTypes.func,
 };
 
 export default DropDown;

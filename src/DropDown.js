@@ -15,8 +15,9 @@ class DropDown extends Component {
 		const { categories } = this.props;
 		const options = categories.map((category) => (
 			<option
+				key={category}
 				value={category}
-				selected={this.props.defaultSelection === category}
+				defaultValue={this.props.defaultSelection === category}
 			>
 				{category}
 			</option>

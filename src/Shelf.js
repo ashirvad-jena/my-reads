@@ -28,12 +28,12 @@ class Shelf extends Component {
 		});
 
 		return (
-			<div className="bookshelf">
+			<li className="bookshelf">
 				<h2 className="bookshelf-title">{currentCategory}</h2>
 				<div className="bookshelf-books">
 					<ol className="books-grid">{bookList}</ol>
 				</div>
-			</div>
+			</li>
 		);
 	}
 }

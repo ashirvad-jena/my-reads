@@ -11,6 +11,10 @@ body,
 	background: rgb(221, 221, 221);
 }
 
+li {
+	list-style: none;
+}
+
 /* main page */
 
 .list-books-title {

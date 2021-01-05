@@ -82,6 +82,11 @@ class BooksApp extends React.Component {
 				) : (
 					<ShelvesContainer jsonObject={jsonObject} />
 				)}
+				<div className="open-search">
+					<a onClick={() => this.setState({ showSearchPage: true })}>
+						Add a book
+					</a>
+				</div>
 			</div>
 		);
 	}

@@ -28,11 +28,6 @@ class ShelvesContainer extends Component {
 				<div className="list-books-content">
 					<ul>{shelves}</ul>
 				</div>
-				<div className="open-search">
-					<a onClick={() => this.setState({ showSearchPage: true })}>
-						Add a book
-					</a>
-				</div>
 			</div>
 		);
 	}

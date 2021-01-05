@@ -70,10 +70,11 @@ class BooksApp extends React.Component {
 			<div className="app">
 				<Switch>
 					<Route
+						exact
 						path="/"
-						render={() => {
-							<ShelvesContainer jsonObject={jsonObject} />;
-						}}
+						render={() => (
+							<ShelvesContainer jsonObject={jsonObject} />
+						)}
 					/>
 					<Route path="/searchBook" component={SearchPage} />
 				</Switch>

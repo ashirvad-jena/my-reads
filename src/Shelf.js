@@ -17,14 +17,13 @@ class Shelf extends Component {
 
 		const bookList = books.map((book) => {
 			return (
-				<li key={book.id}>
-					<Book
-						categories={categories}
-						currentCategory={currentCategory}
-						book={book}
-						onSelected={this.onSelected}
-					/>
-				</li>
+				<Book
+					key={book.id}
+					categories={categories}
+					currentCategory={currentCategory}
+					book={book}
+					onSelected={this.onSelected}
+				/>
 			);
 		});
 

@@ -7,17 +7,18 @@ class ShelvesContainer extends Component {
 		const jsonObject = this.props.jsonObject;
 		const categories = Object.keys(jsonObject);
 
-		const shelves = categories.map((category) => {
-			return (
-				<li key={category}>
+		const shelves = categories
+			.filter((category) => category !== "None")
+			.map((category) => {
+				return (
 					<Shelf
+						key={category}
 						currentCategory={category}
 						categories={categories}
 						books={jsonObject[category]}
 					/>
-				</li>
-			);
-		});
+				);
+			});
 
 		return (
 			<div className="list-books">

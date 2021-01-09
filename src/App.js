@@ -1,11 +1,12 @@
 import React from "react";
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from "./BooksAPI";
 import { Link, Route, Switch } from "react-router-dom";
 import "./App.css";
 import SearchPage from "./SearchPage";
 import ShelvesContainer from "./ShelvesContainer";
 
-const jsonObject = {
+/* // Uncomment to test with static values
+const shelves = {
 	"Currently Reading": [
 		{
 			id: 0,
@@ -61,10 +62,47 @@ const jsonObject = {
 				"http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api",
 		},
 	],
-	None: [],
 };
+*/
+
+const shelves = [
+	{ id: "currentlyReading", name: "Currently Reading" },
+	{ id: "wantToRead", name: "Want to Read" },
+	{ id: "read", name: "Read" },
+];
 
 class BooksApp extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			books: [],
+		};
+		this.parseResponse = this.parseResponse.bind(this);
+	}
+
+	componentDidMount() {
+		BooksAPI.getAll().then((data) => {
+			this.parseResponse(data);
+		});
+	}
+
+	parseResponse(response) {
+		console.log(response);
+		const result = response.map((object) => {
+			return {
+				id: object.id,
+				title: object.title,
+				author: object.authors.join(", "),
+				imageUrl: object.imageLinks.thumbnail,
+				shelfId: object.shelf,
+			};
+		});
+		console.log(result, Array.isArray(result));
+		this.setState({
+			books: result,
+		});
+	}
+
 	render() {
 		return (
 			<div className="app">
@@ -73,14 +111,17 @@ class BooksApp extends React.Component {
 						exact
 						path="/"
 						render={() => (
-							<ShelvesContainer jsonObject={jsonObject} />
+							<ShelvesContainer
+								books={this.state.books}
+								shelves={shelves}
+							/>
 						)}
-					/>
+					></Route>
 					<Route path="/searchBook" component={SearchPage} />
+					<Link to="/searchBook" className="open-search">
+						Add a book
+					</Link>
 				</Switch>
-				<Link to="/searchBook" className="open-search">
-					Add a book
-				</Link>
 			</div>
 		);
 	}

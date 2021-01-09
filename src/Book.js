@@ -9,15 +9,11 @@ class Book extends Component {
 	}
 
 	onSelected = (category) => {
-		this.props.onSelected(
-			this.props.currentCategory,
-			category,
-			this.props.book
-		);
+		console.log(category);
 	};
 
 	render() {
-		const { currentCategory, categories } = this.props;
+		const { shelfId } = this.props;
 		const { title, author, imageUrl } = this.props.book;
 		const url = `url(${imageUrl})`;
 
@@ -32,11 +28,7 @@ class Book extends Component {
 							backgroundImage: url,
 						}}
 					></div>
-					<DropDown
-						defaultSelection={currentCategory}
-						categories={categories}
-						onSelected={this.onSelected}
-					/>
+					<DropDown shelfId={shelfId} onSelected={this.onSelected} />
 				</div>
 				<div className="book-title">{title}</div>
 				<div className="book-authors">{author}</div>
@@ -46,8 +38,7 @@ class Book extends Component {
 }
 
 Book.propTypes = {
-	categories: PropTypes.array.isRequired,
-	currentCategory: PropTypes.string.isRequired,
+	shelfId: PropTypes.string.isRequired,
 	book: PropTypes.object.isRequired,
 	onSelected: PropTypes.func,
 };

@@ -5,21 +5,18 @@ import PropTypes from "prop-types";
 
 class ShelvesContainer extends Component {
 	render() {
-		const jsonObject = this.props.jsonObject;
-		const categories = Object.keys(jsonObject);
-
-		const shelves = categories
-			.filter((category) => category !== "None")
-			.map((category) => {
-				return (
-					<Shelf
-						key={category}
-						currentCategory={category}
-						categories={categories}
-						books={jsonObject[category]}
-					/>
-				);
-			});
+		const { books, shelves } = this.props;
+		console.log(books, shelves);
+		if (!(Array.isArray(books) && books.length)) return <div>NO</div>;
+		const shelfComponents = shelves.map((shelf) => {
+			return (
+				<Shelf
+					key={shelf.id}
+					books={books.filter((book) => book.shelfId === shelf.id)}
+					shelf={shelf}
+				/>
+			);
+		});
 
 		return (
 			<div className="list-books">
@@ -27,7 +24,7 @@ class ShelvesContainer extends Component {
 					<h1>MyReads</h1>
 				</div>
 				<div className="list-books-content">
-					<ul>{shelves}</ul>
+					<ul>{shelfComponents}</ul>
 				</div>
 			</div>
 		);
@@ -35,7 +32,8 @@ class ShelvesContainer extends Component {
 }
 
 ShelvesContainer.propTypes = {
-	jsonObject: PropTypes.object,
+	books: PropTypes.array,
+	shelves: PropTypes.array.isRequired,
 };
 
 export default ShelvesContainer;

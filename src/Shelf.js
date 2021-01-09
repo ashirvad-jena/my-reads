@@ -13,14 +13,13 @@ class Shelf extends Component {
 	};
 
 	render() {
-		const { currentCategory, categories, books } = this.props;
+		const { shelf, books } = this.props;
 
 		const bookList = books.map((book) => {
 			return (
 				<Book
 					key={book.id}
-					categories={categories}
-					currentCategory={currentCategory}
+					shelfId={shelf.id}
 					book={book}
 					onSelected={this.onSelected}
 				/>
@@ -29,7 +28,7 @@ class Shelf extends Component {
 
 		return (
 			<li className="bookshelf">
-				<h2 className="bookshelf-title">{currentCategory}</h2>
+				<h2 className="bookshelf-title">{shelf.name}</h2>
 				<div className="bookshelf-books">
 					<ol className="books-grid">{bookList}</ol>
 				</div>
@@ -39,8 +38,7 @@ class Shelf extends Component {
 }
 
 Shelf.propTypes = {
-	currentCategory: PropTypes.string.isRequired,
-	categories: PropTypes.array,
+	shelf: PropTypes.object,
 	books: PropTypes.array,
 };
 

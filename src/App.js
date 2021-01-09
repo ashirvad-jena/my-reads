@@ -130,23 +130,21 @@ class BooksApp extends React.Component {
 	render() {
 		return (
 			<div className="app">
-				<Switch>
-					<Route
-						exact
-						path="/"
-						render={() => (
-							<ShelvesContainer
-								books={this.state.books}
-								shelves={shelves}
-								onSelected={this.onSelected}
-							/>
-						)}
-					></Route>
-					<Route path="/searchBook" component={SearchPage} />
-					<Link to="/searchBook" className="open-search">
-						Add a book
-					</Link>
-				</Switch>
+				<Route
+					exact
+					path="/"
+					render={() => (
+						<ShelvesContainer
+							books={this.state.books}
+							shelves={shelves}
+							onSelected={this.onSelected}
+						/>
+					)}
+				></Route>
+				<Route path="/searchBook" component={SearchPage} />
+				<Link to="/searchBook" className="open-search">
+					Add a book
+				</Link>
 			</div>
 		);
 	}

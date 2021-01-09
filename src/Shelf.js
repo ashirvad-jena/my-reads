@@ -3,17 +3,8 @@ import Book from "./Book";
 import PropTypes from "prop-types";
 
 class Shelf extends Component {
-	constructor(props) {
-		super(props);
-		this.onSelected = this.onSelected.bind(this);
-	}
-
-	onSelected = (fromCategory, toCategory, book) => {
-		console.log(fromCategory, toCategory, book);
-	};
-
 	render() {
-		const { shelf, books } = this.props;
+		const { shelf, books, onSelected } = this.props;
 
 		const bookList = books.map((book) => {
 			return (
@@ -21,7 +12,7 @@ class Shelf extends Component {
 					key={book.id}
 					shelfId={shelf.id}
 					book={book}
-					onSelected={this.onSelected}
+					onSelected={onSelected}
 				/>
 			);
 		});

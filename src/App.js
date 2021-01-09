@@ -76,11 +76,18 @@ class BooksApp extends React.Component {
 		super(props);
 		this.state = {
 			books: [],
+			shouldFetch: false,
 		};
+		this.fetchAllBooks = this.fetchAllBooks.bind(this);
 		this.parseResponse = this.parseResponse.bind(this);
+		this.onSelected = this.onSelected.bind(this);
 	}
 
 	componentDidMount() {
+		this.fetchAllBooks();
+	}
+
+	fetchAllBooks() {
 		BooksAPI.getAll().then((data) => {
 			this.parseResponse(data);
 		});
@@ -100,7 +107,24 @@ class BooksApp extends React.Component {
 		console.log(result, Array.isArray(result));
 		this.setState({
 			books: result,
+			shouldFetch: false,
 		});
+	}
+
+	onSelected(toShelfId, book) {
+		console.log(toShelfId, book);
+		if (toShelfId === "none") {
+			this.setState((previousState) => {
+				books: previousState.filter(
+					(oldBook) => book.id !== oldBook.id
+				);
+			});
+		} else {
+			BooksAPI.update(book, toShelfId).then((response) => {
+				console.log(response);
+				this.fetchAllBooks();
+			});
+		}
 	}
 
 	render() {
@@ -114,6 +138,7 @@ class BooksApp extends React.Component {
 							<ShelvesContainer
 								books={this.state.books}
 								shelves={shelves}
+								onSelected={this.onSelected}
 							/>
 						)}
 					></Route>

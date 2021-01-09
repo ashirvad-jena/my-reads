@@ -12,8 +12,7 @@ class DropDown extends Component {
 	}
 
 	onChange = (event) => {
-		// this.props.onSelected(event.target.value);
-		console.log(event);
+		this.props.onSelected(event.target.value);
 	};
 
 	render() {

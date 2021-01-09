@@ -8,8 +8,8 @@ class Book extends Component {
 		this.onSelected = this.onSelected.bind(this);
 	}
 
-	onSelected = (category) => {
-		console.log(category);
+	onSelected = (toShelfId) => {
+		this.props.onSelected(toShelfId, this.props.book);
 	};
 
 	render() {

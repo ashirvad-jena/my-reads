@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 class ShelvesContainer extends Component {
 	render() {
-		const { books, shelves } = this.props;
+		const { books, shelves, onSelected } = this.props;
 		console.log(books, shelves);
 		if (!(Array.isArray(books) && books.length)) return <div>NO</div>;
 		const shelfComponents = shelves.map((shelf) => {
@@ -14,6 +14,7 @@ class ShelvesContainer extends Component {
 					key={shelf.id}
 					books={books.filter((book) => book.shelfId === shelf.id)}
 					shelf={shelf}
+					onSelected={onSelected}
 				/>
 			);
 		});

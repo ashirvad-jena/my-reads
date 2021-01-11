@@ -14,10 +14,8 @@ const SearchPage = ({
 	return (
 		<div className="search-books">
 			<div className="search-books-bar">
-				<Link to="/">
-					<button className="close-search" onClick={onClose}>
-						Close
-					</button>
+				<Link className="close-search" to="/" onClick={onClose}>
+					Close
 				</Link>
 				<SearchBar onTextChange={onTextChange} />
 			</div>

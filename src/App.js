@@ -156,9 +156,9 @@ class BooksApp extends React.Component {
 							onSelected={this.onSelected}
 						/>
 					)}
-				></Route>
+				/>
 				<Route
-					path="/searchBook"
+					path="/search"
 					render={() => (
 						<SearchPage
 							searchBooks={this.state.searchBooks}

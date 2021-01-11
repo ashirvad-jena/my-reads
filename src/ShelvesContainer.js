@@ -25,7 +25,7 @@ const ShelvesContainer = ({ books, shelves, onSelected }) => {
 			<div className="list-books-content">
 				<ul>{shelfComponents}</ul>
 			</div>
-			<Link to="/searchBook" className="open-search">
+			<Link to="/search" className="open-search">
 				Add a book
 			</Link>
 		</div>

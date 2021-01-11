@@ -4,34 +4,31 @@ import PropTypes from "prop-types";
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
 
-class SearchPage extends Component {
-	render() {
-		const {
-			books,
-			searchBooks,
-			onClose,
-			onTextChange,
-			onSelected,
-		} = this.props;
-		return (
-			<div className="search-books">
-				<div className="search-books-bar">
-					<Link to="/">
-						<button className="close-search" onClick={onClose}>
-							Close
-						</button>
-					</Link>
-					<SearchBar onTextChange={onTextChange} />
-				</div>
-				<SearchResult
-					books={books}
-					searchBooks={searchBooks}
-					onSelected={onSelected}
-				/>
+const SearchPage = ({
+	books,
+	searchBooks,
+	onClose,
+	onTextChange,
+	onSelected,
+}) => {
+	return (
+		<div className="search-books">
+			<div className="search-books-bar">
+				<Link to="/">
+					<button className="close-search" onClick={onClose}>
+						Close
+					</button>
+				</Link>
+				<SearchBar onTextChange={onTextChange} />
 			</div>
-		);
-	}
-}
+			<SearchResult
+				books={books}
+				searchBooks={searchBooks}
+				onSelected={onSelected}
+			/>
+		</div>
+	);
+};
 
 SearchPage.propTypes = {
 	books: PropTypes.array,

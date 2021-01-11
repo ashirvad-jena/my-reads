@@ -1,47 +1,44 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import * as BooksAPI from "./BooksAPI";
+import PropTypes from "prop-types";
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
 
 class SearchPage extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			query: "Android",
-		};
-		this.onTextChange = this.onTextChange.bind(this);
-		this.searchBooks = this.searchBooks.bind(this);
-	}
-
-	componentDidMount() {
-		this.searchBooks();
-	}
-
-	searchBooks() {
-		console.log(this.state.query);
-		BooksAPI.search(this.state.query).then((response) => {
-			console.log(response);
-		});
-	}
-
-	onTextChange(query) {
-		console.log(query);
-	}
-
 	render() {
+		const {
+			books,
+			searchBooks,
+			onClose,
+			onTextChange,
+			onSelected,
+		} = this.props;
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
-					<Link to="/" className="close-search">
-						Close
+					<Link to="/">
+						<button className="close-search" onClick={onClose}>
+							Close
+						</button>
 					</Link>
-					<SearchBar onTextChange={this.onTextChange} />
+					<SearchBar onTextChange={onTextChange} />
 				</div>
-				<SearchResult />
+				<SearchResult
+					books={books}
+					searchBooks={searchBooks}
+					onSelected={onSelected}
+				/>
 			</div>
 		);
 	}
 }
+
+SearchPage.propTypes = {
+	books: PropTypes.array,
+	searchBooks: PropTypes.array,
+	onClose: PropTypes.func,
+	onTextChange: PropTypes.func,
+	onSelected: PropTypes.func,
+};
 
 export default SearchPage;

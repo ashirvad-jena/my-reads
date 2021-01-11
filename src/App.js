@@ -1,6 +1,6 @@
 import React from "react";
 import * as BooksAPI from "./BooksAPI";
-import { Link, Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./App.css";
 import SearchPage from "./SearchPage";
 import ShelvesContainer from "./ShelvesContainer";
@@ -76,11 +76,13 @@ class BooksApp extends React.Component {
 		super(props);
 		this.state = {
 			books: [],
-			shouldFetch: false,
+			searchBooks: [],
 		};
 		this.fetchAllBooks = this.fetchAllBooks.bind(this);
 		this.parseResponse = this.parseResponse.bind(this);
 		this.onSelected = this.onSelected.bind(this);
+		this.onClose = this.onClose.bind(this);
+		this.onTextChange = this.onTextChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -89,43 +91,58 @@ class BooksApp extends React.Component {
 
 	fetchAllBooks() {
 		BooksAPI.getAll().then((data) => {
-			this.parseResponse(data);
+			const books = this.parseResponse(data);
+			this.setState({
+				books: books,
+			});
 		});
 	}
 
 	parseResponse(response) {
-		console.log(response);
 		const result = response.map((object) => {
 			return {
 				id: object.id,
 				title: object.title,
-				author: object.authors.join(", "),
+				author:
+					"authors" in object ? object.authors.join(", ") : "Unnamed",
 				imageUrl: object.imageLinks.thumbnail,
 				shelfId: object.shelf,
 			};
 		});
-		console.log(result, Array.isArray(result));
-		this.setState({
-			books: result,
-			shouldFetch: false,
-		});
+		return result;
 	}
 
 	onSelected(toShelfId, book) {
-		console.log(toShelfId, book);
 		if (toShelfId === "none") {
-			this.setState((previousState) => {
-				books: previousState.filter(
+			this.setState((previousState) => ({
+				books: previousState.books.filter(
 					(oldBook) => book.id !== oldBook.id
-				);
-			});
+				),
+			}));
 		} else {
 			BooksAPI.update(book, toShelfId).then((response) => {
-				console.log(response);
 				this.fetchAllBooks();
 			});
 		}
 	}
+
+	onClose = () => {
+		this.setState({
+			searchBooks: [],
+		});
+	};
+
+	onTextChange = (query) => {
+		if (query.length === 0) {
+			this.setState({ searchBooks: [] });
+			return;
+		}
+		BooksAPI.search(query).then((response) => {
+			console.log(response);
+			const books = this.parseResponse(response);
+			this.setState({ searchBooks: books });
+		});
+	};
 
 	render() {
 		return (
@@ -141,10 +158,18 @@ class BooksApp extends React.Component {
 						/>
 					)}
 				></Route>
-				<Route path="/searchBook" component={SearchPage} />
-				<Link to="/searchBook" className="open-search">
-					Add a book
-				</Link>
+				<Route
+					path="/searchBook"
+					render={() => (
+						<SearchPage
+							searchBooks={this.state.searchBooks}
+							books={this.state.books}
+							onSelected={this.onSelected}
+							onClose={this.onClose}
+							onTextChange={this.onTextChange}
+						/>
+					)}
+				/>
 			</div>
 		);
 	}

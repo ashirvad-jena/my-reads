@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Shelf from "./Shelf";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 class ShelvesContainer extends Component {
 	render() {
 		const { books, shelves, onSelected } = this.props;
-		console.log(books, shelves);
 		if (!(Array.isArray(books) && books.length))
 			return <div>No Books found</div>;
 		const shelfComponents = shelves.map((shelf) => {
@@ -27,6 +27,9 @@ class ShelvesContainer extends Component {
 				<div className="list-books-content">
 					<ul>{shelfComponents}</ul>
 				</div>
+				<Link to="/searchBook" className="open-search">
+					Add a book
+				</Link>
 			</div>
 		);
 	}

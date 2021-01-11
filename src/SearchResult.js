@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import Book from "./Book";
 
 const SearchResult = ({ searchBooks, books, onSelected }) => {
+	// This is to mark the searched books already in the list with the correct category.
 	const updatedBooks = searchBooks.map((book) => {
 		books.map((b) => {
 			if (b.id === book.id) {
-				book.shelf = b.shelf;
+				book.shelfId = b.shelfId;
 			}
 			return b;
 		});

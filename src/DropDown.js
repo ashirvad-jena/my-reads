@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 class DropDown extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			value: this.props.shelfId,
 		};

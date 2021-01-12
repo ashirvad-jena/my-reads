@@ -89,13 +89,10 @@ class BooksApp extends React.Component {
 		this.fetchAllBooks();
 	}
 
-	fetchAllBooks() {
-		BooksAPI.getAll().then((data) => {
-			const books = this.parseResponse(data);
-			this.setState({
-				books: books,
-			});
-		});
+	async fetchAllBooks() {
+		const data = await BooksAPI.getAll();
+		const books = this.parseResponse(data);
+		this.setState({ books });
 	}
 
 	parseResponse(response) {

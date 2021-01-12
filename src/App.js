@@ -100,6 +100,7 @@ class BooksApp extends React.Component {
 
 	parseResponse(response) {
 		console.log(response);
+		if (!Array.isArray(response)) return [];
 		const result = response.map((object) => {
 			return {
 				id: object.id,

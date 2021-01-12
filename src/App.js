@@ -113,17 +113,18 @@ class BooksApp extends React.Component {
 	}
 
 	onSelected(toShelfId, book) {
+		// Remove the book from library if selected none.
 		if (toShelfId === "none") {
 			this.setState((previousState) => ({
 				books: previousState.books.filter(
 					(oldBook) => book.id !== oldBook.id
 				),
 			}));
-		} else {
-			BooksAPI.update(book, toShelfId).then((response) => {
-				this.fetchAllBooks();
-			});
 		}
+		// Update the server the selection. Send the 'none' too, as on refresh same shouldn't re-appear
+		BooksAPI.update(book, toShelfId).then((response) => {
+			this.fetchAllBooks();
+		});
 	}
 
 	onClose = () => {

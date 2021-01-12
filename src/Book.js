@@ -15,7 +15,7 @@ class Book extends Component {
 	render() {
 		const { shelfId } = this.props;
 		const { title, author, imageUrl } = this.props.book;
-		const url = `url(${imageUrl})`;
+		// const url = `url(${imageUrl})`;
 
 		return (
 			<div className="book">
@@ -25,7 +25,7 @@ class Book extends Component {
 						style={{
 							width: 128,
 							height: 193,
-							backgroundImage: url,
+							backgroundImage: imageUrl,
 						}}
 					></div>
 					<DropDown shelfId={shelfId} onSelected={this.onSelected} />

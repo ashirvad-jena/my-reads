@@ -99,13 +99,17 @@ class BooksApp extends React.Component {
 	}
 
 	parseResponse(response) {
+		console.log(response);
 		const result = response.map((object) => {
 			return {
 				id: object.id,
 				title: object.title,
-				author:
-					"authors" in object ? object.authors.join(", ") : "Unnamed",
-				imageUrl: object.imageLinks.thumbnail,
+				author: object.authors ? object.authors.join(", ") : "Unnamed",
+				imageUrl: `url(${
+					object.imageLinks
+						? object.imageLinks.thumbnail
+						: "book-pack.svg"
+				})`,
 				shelfId: object.shelf,
 			};
 		});
